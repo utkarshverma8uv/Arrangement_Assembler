@@ -1,4 +1,5 @@
 from tkinter import *
+#add the location of welcome txt file here
 hlo=open('C:\\Users\\Aman\\Desktop\\tkinter\\welcome.dat')
 #setting-up parent window
 m_win=Tk()
@@ -12,7 +13,8 @@ db= Button (m_win, text='Database', height= 1, font= ('Georgia',8), bg='white',f
 db.grid(padx=2, pady=2, row=0, column= 2)
 #displaying the logo
 try:
-    lg = Canvas(m_win, width = 300, height = 300, bg='black',relief= 'flat' )      
+    lg = Canvas(m_win, width = 300, height = 300, bg='black',relief= 'flat' )
+    #add the location of logo png  file here
     logo = PhotoImage(file=r'C:\Users\Aman\Desktop\tkinter\logo.png')      
     lg.create_image(22,22, anchor=NW, image=logo)
     lg.grid(row=1, column= 1)
