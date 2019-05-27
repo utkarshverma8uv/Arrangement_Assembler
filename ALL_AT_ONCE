@@ -53,7 +53,7 @@ m_win.title('Arrangement Assembler')
 m_win.configure(background="black")
 m_win.resizable(False,False)
 #setting-up buttons
-asm= Button(m_win, text='Assembler', height= 1,bd=5, font= ('Georgia',8), bg='black',fg='lime', relief= 'raised')
+asm= Button(m_win, text='Assembler', height= 1,bd=5, font= ('Georgia',8), bg='black',fg='lime', relief= 'raised',command=abs)
 asm.grid(padx=2, pady=2, row=0, column= 0)
 dbb= Button (m_win, text='Database', height= 1,bd=5, font= ('Georgia',8), bg='black',fg='lime', relief= 'raised')
 dbb.grid(padx=2, pady=2, row=0, column= 2)
