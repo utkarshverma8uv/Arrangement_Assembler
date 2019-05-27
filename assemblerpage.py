@@ -4,8 +4,8 @@ def act():
         k.write(i.get()+'\n')
     k.flush()
     aw.destroy()
-#add the address of document where it is saved in your computer, here\\//
-k=open('C:\\Users\\Aman\\Desktop\\tkinter\\Absentees.dat','w')
+#add the user in place of pc_name in your computer, here\\//
+k=open('C:\\Users\\pc_name\\Desktop\\Absentees.dat','w')
 aw=Tk()
 aw.title('Assembler')
 aw.configure(background="black")
