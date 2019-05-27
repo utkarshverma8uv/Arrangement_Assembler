@@ -1,6 +1,6 @@
 from tkinter import *
-#add your address of document where it is saved here\\//
-hlo=open('C:\\Users\\Aman\\Desktop\\tkinter\\welcome.dat')
+#add your computer name here\\// in place of pc_name
+hlo=open('C:\\Users\\pc_name\\Desktop\\tkinter\\welcome.dat')
 #defining functions
 def ext():
     m_win.destroy()
