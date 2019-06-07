@@ -20,6 +20,9 @@ inst2=Label(aw, text =('-> Then click submit button.')
            ,bg='black', font= ('Gabriola',15), fg='lime')
 inst2.grid(row=3, column= 1)
 
+dt= Entry(aw,width=20).grid(row=4,column=1)
+txt=Label(aw,text='Day of week',bg='black', width=15, font= ('Gabriola',15), fg='lime').grid(row=4,column=0)
+
 t1= Entry(aw,width=20)
 t2= Entry(aw,width=20)
 t3= Entry(aw,width=20)
@@ -33,8 +36,8 @@ t10= Entry(aw,width=20)
 t_lst=[t1,t2,t3,t4,t5,t6,t7,t8,t9,t10]
 for i in range (len(t_lst)):
     label = Label(aw, text = ("Teacher",i+1,':'),bg='black', width=15, font= ('Gabriola',15), fg='lime')
-    label.grid(row=i+4, column= 0)
-    t_lst[i].grid(row=i+4, column= 1,pady=5,padx=5)
+    label.grid(row=i+5, column= 0)
+    t_lst[i].grid(row=i+5, column= 1,pady=5,padx=5)
 
 sub = Button(aw, text='SUBMIT',bg='black', width=15, font= ('Georgia',10), fg='lime',
               relief='raised',bd=5 ,command= act )
