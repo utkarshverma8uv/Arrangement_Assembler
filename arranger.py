@@ -1,8 +1,8 @@
 import mysql.connector as mysql
 from tkinter import *
 k=open('C:\\Users\\Aman\\Desktop\\tkinter\\Absentees.dat','r')
-
-mycon= mysql.connect(host='localhost',user='root',password= 'amanverma2002',database='school')
+pas=input('enter your mysql password-')
+mycon= mysql.connect(host='localhost',user='root',password= pas ,database='school')
 cursor=mycon.cursor()
 
 pd_lst=['1st','2nd','3rd','4th','5th','6th','7th','8th']
