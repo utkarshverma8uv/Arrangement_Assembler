@@ -53,7 +53,7 @@ def arr():
     head.grid(row=0,column=0)
 
     def region(event):
-        can.configure(scrollregion=can.bbox("all"),width=675)
+        can.configure(scrollregion=can.bbox("all"),width=680,height=605)
 
     fr=Frame(arw)
     fr.grid(row=1,column=0)
@@ -346,9 +346,9 @@ pageframe=Frame(m_win,bg='black')
 pageframe.grid(row=1,column=0,columnspan=6)
 
 try:
-    lg = Canvas(pageframe, width = 300, height = 300, bg='black',relief= 'groove' )
+    lg = Canvas(pageframe, width = 273, height = 295, bg='black',relief= 'groove' )
     logo = PhotoImage(file=r'C:\Users\{}\Desktop\tkinter\logo.png'.format(usr))      
-    lg.create_image(22,22, anchor=NW, image=logo)
+    lg.create_image(2,2, anchor=NW, image=logo)
     lg.grid(row=1, column= 3)
 except:
     label=Label(pageframe , text = '        File Not Found :(         ' , bg='black', fg= 'red', font =('Gabriola', 30 ))
