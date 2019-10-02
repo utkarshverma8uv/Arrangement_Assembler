@@ -1,6 +1,7 @@
 from tkinter import *
 import mysql.connector as mysql
 usr=input('Enter Your Computer Username: ')
+pas=input('Enter MYSQL Password: ')
 #add your address of document where it is saved here\\//
 try:
     hlo=open('C:\\Users\\{}\\Desktop\\tkinter\\welcome.dat'.format(usr))
@@ -17,7 +18,6 @@ def arr():
         print('File Not Found :|')
     conn=0
     while conn==0:
-        pas=input('Enter mysql password: ')
         try:
             mycon= mysql.connect(host='localhost',user='root',password= pas,database='school')
             cursor=mycon.cursor()
@@ -208,7 +208,6 @@ def dbf():
         
     conn=0
     while conn==0:
-        pas=input('Enter mysql password: ')
         try:
             mycon= mysql.connect(host='localhost',user='root',password= pas,database='school')
             cursor=mycon.cursor()
