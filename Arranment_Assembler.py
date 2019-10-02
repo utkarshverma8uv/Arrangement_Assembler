@@ -1,49 +1,106 @@
 from tkinter import *
 import mysql.connector as mysql
 usr=input('Enter Your Computer Username: ')
-pas=input('Enter MYSQL Password: ')
+pas=input('Enter Your MYSQL Password: ')
 #add your address of document where it is saved here\\//
 try:
     hlo=open('C:\\Users\\{}\\Desktop\\tkinter\\welcome.dat'.format(usr))
 except:
     print('File Not Found :|')
-#defining functions
-def ext():
-    m_win.destroy()
+#################################################################################################################
+#main window
+#setting-up parent window
+def parwin():
+    m_win=Tk()
+    m_win.title('Arrangement Assembler')
+    m_win.configure(background="black")
+    m_win.resizable(False,False)
+    #setting-up buttons
+    buttonfr=Frame(m_win, bg='black')
+    buttonfr.grid(row=0, column=0,columnspan=6)
 
-def arr():
+    asm= Button(buttonfr, text='Assembler', height= 1,bd=5, font= ('Georgia',8), bg='black',fg='lime', relief= 'raised'
+                ,command=asmf)
+    asm.grid(padx=2, pady=2, row=0, column= 0)
+    dbb= Button (buttonfr, text='Database', height= 1,bd=5, font= ('Georgia',8), bg='black',fg='lime', relief= 'raised'
+                 ,command= dbf)
+    dbb.grid(padx=2, pady=2, row=0, column= 1)
+    exb=Button (buttonfr, text='Exit',width=10,height= 1,bd=5, font= ('Georgia',8), bg='black',fg='lime', relief= 'raised',
+                command=ext)
+    exb.grid(padx=2, pady=2, row=0, column= 5)
+
+    #displaying the logo
+    pageframe=Frame(m_win,bg='black')
+    pageframe.grid(row=1,column=0,columnspan=6)
     try:
-        k=open('C:\\Users\\{}\\Desktop\\tkinter\\Absentees.dat'.format(usr),'r')
+        lg = Canvas(pageframe, width = 300, height = 300, bg='black',relief= 'groove' )
+        logo = PhotoImage(file=r'C:\Users\{}\Desktop\tkinter\logo.png'.format(usr))      
+        lg.create_image(22,22, anchor=NW, image=logo)
+        lg.grid(row=1, column= 3)
     except:
-        print('File Not Found :|')
-    conn=0
-    while conn==0:
-        try:
-            mycon= mysql.connect(host='localhost',user='root',password= pas,database='school')
-            cursor=mycon.cursor()
-            print ('Connection Sucessful!! :)')
-            conn=1
-        except:
-            print('Connection Failed!!!')
+        label=Label(pageframe , text = '        File Not Found :(         ' , bg='black', fg= 'red', font =('Gabriola', 30 ))
+        label.grid(row=1,column=3)
+    #displaying welcome message
+    try:
+        wlc = Label(pageframe , text = hlo.read() , bg='black', fg= 'lime', font =('Gabriola', 18 ))
+        wlc.grid(row=2, column= 2,columnspan=3)
+    except:
+        pass
+    end=Label(m_win, bg='black' ).grid(row=3, column= 0)
 
-    pd_lst=['1st','2nd','3rd','4th','5th','6th','7th','8th']
-    dt= k.readline()[0:3]
+    m_win.mainloop()
+############################################################################################################################################################
+#assembler page
+try:
+    k=open('C:\\Users\\{}\\Desktop\\tkinter\\Absentees.dat'.format(usr),'w')
+except:
+    print('File Not Found :|')
+    
+def asmbl_win():
+    aw=Tk()
+    aw.title('Assembler')
+    aw.configure(background="black")
+    aw.resizable(False,False)
 
-    t_lst=[]
-    cursor.execute('show tables')
-    data=list(cursor.fetchall())
-    for t in data:
-        t_lst+=[t[0]]
+    title=Label(aw, text ='ASSEMBLER',bg='black', width=15, font= ('Gabriola',30), fg='lime',relief= 'raised',bd=5)
+    title.grid(row=0, column= 1,pady=5,padx=5)
+    inst1=Label(aw, text =('-> Enter 3 character teacher codes in each column.')
+               ,bg='black', font= ('Gabriola',15), fg='lime')
+    inst1.grid(row=2, column= 1)
+    inst2=Label(aw, text =('-> Then click submit button.')
+               ,bg='black', font= ('Gabriola',15), fg='lime')
+    inst2.grid(row=3, column= 1)
 
-    abt=[]
-    for l in range(10):
-        line=k.readline()
-        if len(line)==4:
-            abt+=[(line[0:3])]
-    ch_lst=t_lst
-    for a in abt:
-        ch_lst.remove(a)
-            
+    dt= Entry(aw,width=20)
+    txt=Label(aw,text='Day of week',bg='black', width=15, font= ('Gabriola',15), fg='lime').grid(row=4,column=0)
+
+    t1= Entry(aw,width=20)
+    t2= Entry(aw,width=20)
+    t3= Entry(aw,width=20)
+    t4= Entry(aw,width=20)
+    t5= Entry(aw,width=20)
+    t6= Entry(aw,width=20)
+    t7= Entry(aw,width=20)
+    t8= Entry(aw,width=20)
+    t9= Entry(aw,width=20)
+    t10= Entry(aw,width=20)
+    t_lst=[dt,t1,t2,t3,t4,t5,t6,t7,t8,t9,t10]
+    for i in range (len(t_lst)):
+        if i ==0:
+            t_lst[i].grid(row=i+4, column= 1,pady=5,padx=5)
+        elif i >0:
+            label = Label(aw, text = ("Teacher",i,':'),bg='black', width=15, font= ('Gabriola',15), fg='lime')
+            label.grid(row=i+5, column= 0)
+            t_lst[i].grid(row=i+5, column= 1,pady=5,padx=5)
+
+    sub = Button(aw, text='SUBMIT',bg='black', width=15, font= ('Georgia',10), fg='lime',
+                  relief='raised',bd=5 ,command= act )
+    sub.grid(padx=2,row=15, column= 4)
+    
+    aw.mainloop()
+################################################################################################################################################
+#arraanger window
+def aranger_win():
     arw=Tk()
     arw.title('Arranger')
     arw.configure(background="black")
@@ -53,7 +110,7 @@ def arr():
     head.grid(row=0,column=0)
 
     def region(event):
-        can.configure(scrollregion=can.bbox("all"),width=680,height=605)
+        can.configure(scrollregion=can.bbox("all"),width=675)
 
     fr=Frame(arw)
     fr.grid(row=1,column=0)
@@ -121,101 +178,9 @@ def arr():
 
     mainloop()
 
-
-    
-def asmf():
-
-    def act():
-        try:
-            for i in t_lst:
-                k.write(i.get()+'\n')
-            k.flush()
-            aw.destroy()
-            arr()
-        except:
-            aw.destroy()
-            fl=Tk()
-            fl.title('Failure')
-            label=Label(fl, text = '   File Not Found :(   ' , bg='black', fg= 'red', font =('Gabriola', 30 ))
-            label.grid(row=0,column=0)
-    #add address of document where it is saved here\\//
-    try:
-        k=open('C:\\Users\\{}\\Desktop\\tkinter\\Absentees.dat'.format(usr),'w')
-    except:
-        print('File Not Found :|')
-    aw=Tk()
-    aw.title('Assembler')
-    aw.configure(background="black")
-    aw.resizable(False,False)
-
-    title=Label(aw, text ='ASSEMBLER',bg='black', width=15, font= ('Gabriola',30), fg='lime',relief= 'raised',bd=5)
-    title.grid(row=0, column= 1,pady=5,padx=5)
-    inst1=Label(aw, text =('-> Enter 3 character teacher codes in each column.')
-               ,bg='black', font= ('Gabriola',15), fg='lime')
-    inst1.grid(row=2, column= 1)
-    inst2=Label(aw, text =('-> Then click submit button.')
-               ,bg='black', font= ('Gabriola',15), fg='lime')
-    inst2.grid(row=3, column= 1)
-
-    dt= Entry(aw,width=20)
-    txt=Label(aw,text='Day of week',bg='black', width=15, font= ('Gabriola',15), fg='lime').grid(row=4,column=0)
-
-    t1= Entry(aw,width=20)
-    t2= Entry(aw,width=20)
-    t3= Entry(aw,width=20)
-    t4= Entry(aw,width=20)
-    t5= Entry(aw,width=20)
-    t6= Entry(aw,width=20)
-    t7= Entry(aw,width=20)
-    t8= Entry(aw,width=20)
-    t9= Entry(aw,width=20)
-    t10= Entry(aw,width=20)
-    t_lst=[dt,t1,t2,t3,t4,t5,t6,t7,t8,t9,t10]
-    for i in range (len(t_lst)):
-        if i ==0:
-            t_lst[i].grid(row=i+4, column= 1,pady=5,padx=5)
-        elif i >0:
-            label = Label(aw, text = ("Teacher",i,':'),bg='black', width=15, font= ('Gabriola',15), fg='lime')
-            label.grid(row=i+5, column= 0)
-            t_lst[i].grid(row=i+5, column= 1,pady=5,padx=5)
-
-    sub = Button(aw, text='SUBMIT',bg='black', width=15, font= ('Georgia',10), fg='lime',
-                  relief='raised',bd=5 ,command= act )
-    sub.grid(padx=2,row=15, column= 4)
-    
-    aw.mainloop()
-
-def dbf():
-    def inp(c):
-        if len(plst[c].get())==0:
-            return('null')
-        else:
-            return(plst[c].get())
-
-    def crate():
-        try:
-            cursor.execute('create table {}(Day varchar(10), 1st int, 2nd int,3rd int,4th int,5th int,6th int,7th int,8th int)'.format(tnm.get()))
-        except:
-            pass
-        tchnm=tnm.get()
-        for d in range(6):
-            k=d*9+1
-            cursor.execute("insert into {} values('{}',{},{},{},{},{},{},{},{})".format(
-                tchnm,dys[d],inp(k),inp(k+1),inp(k+2),inp(k+3),inp(k+4),inp(k+5),inp(k+6),inp(k+7)))
-            mycon.commit()
-        print(' THANK YOU !!!! :)')
-        tt_cret.destroy()
-        
-    conn=0
-    while conn==0:
-        try:
-            mycon= mysql.connect(host='localhost',user='root',password= pas,database='school')
-            cursor=mycon.cursor()
-            print ('Connection Sucessful!! :)')
-            conn=1
-        except:
-            print('Connection Failed!!! :[')
-            
+################################################################################################################################################
+#database window
+def db_win():
     tt_cret=Tk()
     tt_cret.title('Time-Table Synthesis')
     tt_cret.configure(background="black")
@@ -317,48 +282,107 @@ def dbf():
                   relief='raised',bd=5 ,command= crate )
     sub.grid(padx=2,row=15, column= 4)
 
-
-
     mainloop()
+###############################################################################################################################
+#DEFINING FUNCTIONS
+def ext():
+    m_win.destroy()
+###############################################################################################################################
+def arr():
+    try:
+        k=open('C:\\Users\\{}\\Desktop\\tkinter\\Absentees.dat'.format(usr),'r')
+    except:
+        print('File Not Found :|')
+    conn=0
+    while conn==0:
+        pas=input('Enter mysql password: ')
+        try:
+            mycon= mysql.connect(host='localhost',user='root',password= pas,database='school')
+            cursor=mycon.cursor()
+            print ('Connection Sucessful!! :)')
+            conn=1
+        except:
+            print('Connection Failed!!!')
+
+    pd_lst=['1st','2nd','3rd','4th','5th','6th','7th','8th']
+    dt= k.readline()[0:3]
+
+    t_lst=[]
+    cursor.execute('show tables')
+    data=list(cursor.fetchall())
+    for t in data:
+        t_lst+=[t[0]]
+
+    abt=[]
+    for l in range(10):
+        line=k.readline()
+        if len(line)==4:
+            abt+=[(line[0:3])]
+    ch_lst=t_lst
+    for a in abt:
+        ch_lst.remove(a)
+
+    aranger_win()
+##################################################################################################################
+def asmf():
+
+    def act():
+        try:
+            for i in t_lst:
+                k.write(i.get()+'\n')
+            k.flush()
+            aw.destroy()
+            arr()
+            asmbl_win()
+        except:
+            aw.destroy()
+            fl=Tk()
+            fl.title('Failure')
+            label=Label(fl, text = '   File Not Found :(   ' , bg='black', fg= 'red', font =('Gabriola', 30 ))
+            label.grid(row=0,column=0)
+
+        
+#############################################################################################################################
+def dbf():
+    def inp(c):
+        if len(plst[c].get())==0:
+            return('null')
+        else:
+            return(plst[c].get())
+
+    def crate():
+        try:
+            cursor.execute('create table {}(Day varchar(10), 1st int, 2nd int,3rd int,4th int,5th int,6th int,7th int,8th int)'.format(tnm.get()))
+        except:
+            pass
+        tchnm=tnm.get()
+        for d in range(6):
+            k=d*9+1
+            cursor.execute("insert into {} values('{}',{},{},{},{},{},{},{},{})".format(
+                tchnm,dys[d],inp(k),inp(k+1),inp(k+2),inp(k+3),inp(k+4),inp(k+5),inp(k+6),inp(k+7)))
+            mycon.commit()
+        print(' THANK YOU !!!! :)')
+        tt_cret.destroy()
+        
+    conn=0
+    while conn==0:
+        pas=input('Enter mysql password: ')
+        try:
+            mycon= mysql.connect(host='localhost',user='root',password= pas,database='school')
+            cursor=mycon.cursor()
+            print ('Connection Sucessful!! :)')
+            conn=1
+        except:
+            print('Connection Failed!!! :[')
+    db_win()
+
+parwin()
+
+
+
+
+
+
 
     
-#setting-up parent window
-m_win=Tk()
-m_win.title('Arrangement Assembler')
-m_win.configure(background="black")
-m_win.resizable(False,False)
-#setting-up buttons
-buttonfr=Frame(m_win, bg='black')
-buttonfr.grid(row=0, column=0,columnspan=6)
 
-asm= Button(buttonfr, text='Assembler', height= 1,bd=5, font= ('Georgia',8), bg='black',fg='lime', relief= 'raised'
-            ,command=asmf)
-asm.grid(padx=2, pady=2, row=0, column= 0)
-dbb= Button (buttonfr, text='Database', height= 1,bd=5, font= ('Georgia',8), bg='black',fg='lime', relief= 'raised'
-             ,command= dbf)
-dbb.grid(padx=2, pady=2, row=0, column= 1)
-exb=Button (buttonfr, text='Exit',width=10,height= 1,bd=5, font= ('Georgia',8), bg='black',fg='lime', relief= 'raised',
-            command=ext)
-exb.grid(padx=2, pady=2, row=0, column= 5)
-
-#displaying the logo
-pageframe=Frame(m_win,bg='black')
-pageframe.grid(row=1,column=0,columnspan=6)
-
-try:
-    lg = Canvas(pageframe, width = 273, height = 295, bg='black',relief= 'groove' )
-    logo = PhotoImage(file=r'C:\Users\{}\Desktop\tkinter\logo.png'.format(usr))      
-    lg.create_image(2,2, anchor=NW, image=logo)
-    lg.grid(row=1, column= 3)
-except:
-    label=Label(pageframe , text = '        File Not Found :(         ' , bg='black', fg= 'red', font =('Gabriola', 30 ))
-    label.grid(row=1,column=3)
-#displaying welcome message
-try:
-    wlc = Label(pageframe , text = hlo.read() , bg='black', fg= 'lime', font =('Gabriola', 18 ))
-    wlc.grid(row=2, column= 2,columnspan=3)
-except:
-    pass
-end=Label(m_win, bg='black' ).grid(row=3, column= 0)
-
-m_win.mainloop()
