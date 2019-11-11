@@ -1,16 +1,9 @@
 from tkinter import *
 import mysql.connector as mysql
-pas=input('Enter Your MYSQL Password: ')
-usr=input('Enter Your Computer Username: ')
-#add your address of document where it is saved here\\//
-try:
-    hlo=open('C:\\Users\\{}\\Desktop\\tkinter\\welcome.dat'.format(usr))
-except:
-    print('File Not Found :|')
+
 #defining functions
 
-def ext():
-    m_win.destroy()
+
 
 def arr():
     try:
@@ -322,44 +315,70 @@ def dbf():
 
     mainloop()
 
-    
-#setting-up parent window
-m_win=Tk()
-m_win.title('Arrangement Assembler')
-m_win.configure(background="black")
-m_win.resizable(False,False)
-#setting-up buttons
-buttonfr=Frame(m_win, bg='black')
-buttonfr.grid(row=0, column=0,columnspan=6)
+def mwin():
+    pas=paswrd.get()
+    usr=user.get()
+    #add your address of document where it is saved here\\//
+    try:
+        hlo=open('C:\\Users\\{}\\Desktop\\tkinter\\welcome.dat'.format(usr))
+    except:
+        print('File Not Found :|')
+    home.destroy()
+    #setting-up parent window
+    m_win=Tk()
+    #m_win.iconbitmap(r'C:\Users\{}\Desktop\tkinter\logo.png'.format(usr))
+    m_win.title('Arrangement Assembler')
+    m_win.configure(background="black")
+    m_win.resizable(False,False)
+    #setting-up buttons
+    buttonfr=Frame(m_win, bg='black')
+    buttonfr.grid(row=0, column=0,columnspan=6)
 
-asm= Button(buttonfr, text='Assembler', height= 1,bd=5, font= ('Georgia',8), bg='black',fg='lime', relief= 'raised'
-            ,command=asmf)
-asm.grid(padx=2, pady=2, row=0, column= 0)
-dbb= Button (buttonfr, text='Database', height= 1,bd=5, font= ('Georgia',8), bg='black',fg='lime', relief= 'raised'
-             ,command= dbf)
-dbb.grid(padx=2, pady=2, row=0, column= 1)
-exb=Button (buttonfr, text='Exit',width=10,height= 1,bd=5, font= ('Georgia',8), bg='black',fg='lime', relief= 'raised',
-            command=ext)
-exb.grid(padx=2, pady=2, row=0, column= 5)
+    asm= Button(buttonfr, text='Assembler', height= 1,bd=5, font= ('Georgia',8), bg='black',fg='lime', relief= 'raised'
+                ,command=asmf)
+    asm.grid(padx=2, pady=2, row=0, column= 0)
+    dbb= Button (buttonfr, text='Database', height= 1,bd=5, font= ('Georgia',8), bg='black',fg='lime', relief= 'raised'
+                 ,command= dbf)
+    dbb.grid(padx=2, pady=2, row=0, column= 1)
+    exb=Button (buttonfr, text='Exit',width=10,height= 1,bd=5, font= ('Georgia',8), bg='black',fg='lime', relief= 'raised',
+                command=m_win.destroy )
+    exb.grid(padx=2, pady=2, row=0, column= 5)
 
-#displaying the logo
-pageframe=Frame(m_win,bg='black')
-pageframe.grid(row=1,column=0,columnspan=6)
+    #displaying the logo
+    pageframe=Frame(m_win,bg='black')
+    pageframe.grid(row=1,column=0,columnspan=6)
 
-try:
-    lg = Canvas(pageframe, width = 270, height = 295, bg='black',relief= 'groove' )
-    logo = PhotoImage(file=r'C:\Users\{}\Desktop\tkinter\logo.png'.format(usr))      
-    lg.create_image(2,2, anchor=NW, image=logo)
-    lg.grid(row=1, column= 3)
-except:
-    label=Label(pageframe , text = '        File Not Found :(         ' , bg='black', fg= 'red', font =('Gabriola', 30 ))
-    label.grid(row=1,column=3)
-#displaying welcome message
-try:
-    wlc = Label(pageframe , text = hlo.read() , bg='black', fg= 'lime', font =('Gabriola', 18 ))
-    wlc.grid(row=2, column= 2,columnspan=3)
-except:
-    pass
-end=Label(m_win, bg='black' ).grid(row=3, column= 0)
+    try:
+        lg = Canvas(pageframe, width = 270, height = 295, bg='black',relief= 'groove' )
+        logo = PhotoImage(file=r'C:\Users\{}\Desktop\tkinter\logo.png'.format(usr))      
+        lg.create_image(2,2, anchor=NW, image=logo)
+        lg.grid(row=1, column= 3)
+    except:
+        label=Label(pageframe , text = '        File Not Found :(         ' , bg='black', fg= 'red', font =('Gabriola', 30 ))
+        label.grid(row=1,column=3)
+    #displaying welcome message
+    try:
+        wlc = Label(pageframe , text = hlo.read() , bg='black', fg= 'lime', font =('Gabriola', 18 ))
+        wlc.grid(row=2, column= 2,columnspan=3)
+    except:
+        pass
+    end=Label(m_win, bg='black' ).grid(row=3, column= 0)
 
-m_win.mainloop()
+    m_win.mainloop()
+
+home=Tk()
+home.title('Arrangement Assembler')
+home.configure(background="black")
+home.resizable(False,False)
+label=Label(home , text = 'Computer Username : ' , bg='black', fg= 'powder blue', font =('Gabriola', 30 ))
+label.grid(padx=2, pady=2,row=1,column=1,columnspan=2)
+user=Entry(home,width=40,font= ('Gabriola',20,'bold'))
+user.grid(padx=10, pady=2,row=1,column=3,columnspan=2)
+label=Label(home , text = 'MYSQL Password : ' , bg='black', fg= 'powder blue', font =('Gabriola', 30 ))
+label.grid(padx=2, pady=2,row=2,column=1,columnspan=2)
+paswrd=Entry(home,width=40,show='$$',font= ('Gabriola',20,'bold'))
+paswrd.grid(padx=10, pady=2,row=2,column=3,columnspan=2)
+nxt=Button (home, text='NEXT',width=10,height= 1,bd=5, font= ('Georgia',8), bg='black',fg='powder blue', relief= 'raised',
+            command=mwin)
+nxt.grid(padx=2, pady=2, row=3, column= 3)
+home.mainloop()
