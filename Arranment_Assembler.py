@@ -2,12 +2,11 @@ from tkinter import *
 import mysql.connector as mysql
 
 #defining functions
-
-
-
+'''----------------------------------------------------------------------------------------------------------------'''
+'''Setting Up Arranger Window'''
 def arr():
     try:
-        k=open('C:\\Users\\{}\\Desktop\\tkinter\\Absentees.dat'.format(usr),'r')
+        k=open('C:\\Users\\{}\\Desktop\\Absentees.dat'.format(usr),'r')
     except:
         print('File Not Found :|')
     conn=0
@@ -19,7 +18,7 @@ def arr():
             conn=1
         except:
             print('Connection Failed!!!')
-
+# Making list of absent and available teachers
     pd_lst=['1st','2nd','3rd','4th','5th','6th','7th','8th']
     dt= k.readline()[0:3]
 
@@ -37,15 +36,16 @@ def arr():
     ch_lst=t_lst
     for a in abt:
         ch_lst.remove(a)
-            
+
+# Setting-up GUI
     arw=Tk()
     arw.title('Arranger')
     arw.configure(background="black")
-    arw.resizable(False,False)
 
     head=Label(arw,text ='ARRANGER',bg='black', font= ('Gabriola',40), fg='lime')
     head.grid(row=0,column=0)
 
+# defining scroll region
     def region(event):
         can.configure(scrollregion=can.bbox("all"),width=680,height=605)
 
@@ -65,38 +65,38 @@ def arr():
 
     can.config(yscrollcommand=scrollBar.set)
 
+# Creating table of available teachers in GUI window
     for i in range(len(abt)):
         cursor.execute("select 1st,2nd,3rd,4th,5th,6th,7th,8th from {} where day='{}'".format(abt[i],dt))
         d=cursor.fetchone()
 
-        
-        tcname=Label(mainframe,text =abt[i],bg='black',height=1, font= ('Gabriola',30), fg='lime')
-        tcname.grid(row=i*8+1,column=1)
+        tcname=Label(mainframe,text ='Absent Teacher : '+ abt[i],bg='black',height=1, font= ('Gabriola',30),fg='lime')
+        tcname.grid(row=i*8+2,column=1,columnspan=10)
         
         period=Frame(mainframe,bg='black',relief='groove',bd=5)
-        period.grid(row=i*8+2,column=0)
+        period.grid(row=i*8+3,column=0)
         label=Label(period,text ='PERIODS',bg='black', font= ('Gabriola',20), fg='lime',relief='raised',bd=3)
-        label.grid(row=i*8+2,column=0)
+        label.grid(row=i*8+3,column=0)
         for p in range(8):
             prd=Label(period,text =pd_lst[p],width=7,bg='black', font= ('Gabriola',20), fg='lime',relief='raised',bd=2)
-            prd.grid(row=i*8+3+p,column=0)
+            prd.grid(row=i*8+4+p,column=0)
 
         clas=Frame(mainframe,bg='black',relief='groove',bd=5)
-        clas.grid(row=i*8+2,column=1)
+        clas.grid(row=i*8+3,column=1)
         label=Label(clas,text ='CLASS',width=7,bg='black', font= ('Gabriola',20), fg='lime',relief='raised',bd=3)
-        label.grid(row=i*8+2,column=1)
+        label.grid(row=i*8+3,column=1)
         for m in range(8):
             if (d[m])==None:
                 label=Label(clas,text ='Free',width=7,bg='black', font= ('Gabriola',20), fg='lime',relief='raised',bd=2)
-                label.grid(row=i*8+3+m,column=1)
+                label.grid(row=i*8+4+m,column=1)
             else:
                 label=Label(clas,text =d[m],width=7,bg='black', font= ('Gabriola',20), fg='lime',relief='raised',bd=2)
-                label.grid(row=i*8+3+m,column=1)
+                label.grid(row=i*8+4+m,column=1)
 
         avail_tch=Frame(mainframe,bg='black',relief='groove',bd=5)
-        avail_tch.grid(row=i*8+2,column=2)
+        avail_tch.grid(row=i*8+3,column=2)
         label=Label(avail_tch,text ='AVAILABLE TEACHERS',width=40,bg='black', font= ('Gabriola',20), fg='lime',relief='raised',bd=3)
-        label.grid(row=i*8+2,column=2,columnspan=3)
+        label.grid(row=i*8+3,column=2,columnspan=3)
 
         cn=2
         for pd in range(8):
@@ -105,20 +105,16 @@ def arr():
                 ch_data=cursor.fetchone()
                 if ch_data!=None:
                     label=Label(avail_tch,text =c,width=7,bg='black', font= ('Gabriola',20), fg='lime',relief='raised',bd=2)
-                    label.grid(row=i*8+3+pd,column=cn)
+                    label.grid(row=i*8+4+pd,column=cn)
                     cn+=1
                 elif cn<3:
                     label=Label(avail_tch,text ='None',width=7,bg='black', font= ('Gabriola',20), fg='lime',relief='raised',bd=2)
-                    label.grid(row=i*8+3+pd,column=cn)
+                    label.grid(row=i*8+4+pd,column=cn)
             cn=2
-
-
     mainloop()
-
-
-    
+'''-----------------------------------------------------------------------------------------------------------------------------------------------
+Setting Up Assembler window'''
 def asmf():
-
     def act():
         try:
             for i in t_lst:
@@ -132,11 +128,12 @@ def asmf():
             fl.title('Failure')
             label=Label(fl, text = '   File Not Found :(   ' , bg='black', fg= 'red', font =('Gabriola', 30 ))
             label.grid(row=0,column=0)
-    #add address of document where it is saved here\\//
+    #address of document where list of absent teachers must be saved\\//
     try:
-        k=open('C:\\Users\\{}\\Desktop\\tkinter\\Absentees.dat'.format(usr),'w')
+        k=open('C:\\Users\\{}\\Desktop\\Absentees.dat'.format(usr),'w')
     except:
         print('File Not Found :|')
+    # Setting up GUI Interface
     aw=Tk()
     aw.title('Assembler')
     aw.configure(background="black")
@@ -176,9 +173,10 @@ def asmf():
     sub = Button(aw, text='SUBMIT',bg='black', width=15, font= ('Georgia',10), fg='lime',
                   relief='raised',bd=5 ,command= act )
     sub.grid(padx=2,row=15, column= 4)
-    
     aw.mainloop()
 
+'''-------------------------------------------------------------------------------------------------------------------------------------------------------
+Setting Up Database window'''
 def dbf():
     def inp(c):
         if len(plst[c].get())==0:
@@ -254,7 +252,6 @@ def dbf():
     t7=Entry(day,width=7,font= ('Gabriola',20))
     t8=Entry(day,width=7,font= ('Gabriola',20))
 
-
     w=Label(day,text ='Wednesday',width=8,bg='black', font= ('Gabriola',20), fg='lime',relief='raised',bd=3)
     w1=Entry(day,width=7,font= ('Gabriola',20))
     w2=Entry(day,width=7,font= ('Gabriola',20))
@@ -306,19 +303,18 @@ def dbf():
         for j in range (0,9):
             plst[i+j].grid(row=int(i/8)+1,column=j)
             
-
     sub = Button(tt_cret, text='SUBMIT',bg='black', width=15, font= ('Georgia',10), fg='lime',
                   relief='raised',bd=5 ,command= crate )
     sub.grid(padx=2,row=15, column= 4)
-
-
-
     mainloop()
 
+'''------------------------------------------------------------------------------------------------------------------------------
+Setting Up Welcome window'''
 def mwin():
+    global usr,pas
     pas=paswrd.get()
     usr=user.get()
-    #add your address of document where it is saved here\\//
+    #add here your address of welcome document where it is saved \\//
     try:
         hlo=open('C:\\Users\\{}\\Desktop\\tkinter\\welcome.dat'.format(usr))
     except:
@@ -326,7 +322,6 @@ def mwin():
     home.destroy()
     #setting-up parent window
     m_win=Tk()
-    #m_win.iconbitmap(r'C:\Users\{}\Desktop\tkinter\logo.png'.format(usr))
     m_win.title('Arrangement Assembler')
     m_win.configure(background="black")
     m_win.resizable(False,False)
@@ -354,7 +349,8 @@ def mwin():
         lg.create_image(2,2, anchor=NW, image=logo)
         lg.grid(row=1, column= 3)
     except:
-        label=Label(pageframe , text = '        File Not Found :(         ' , bg='black', fg= 'red', font =('Gabriola', 30 ))
+        label=Label(pageframe , text = '        File Not Found :(         '
+                    , bg='black', fg= 'red', font =('Gabriola', 30 ))
         label.grid(row=1,column=3)
     #displaying welcome message
     try:
@@ -366,6 +362,8 @@ def mwin():
 
     m_win.mainloop()
 
+'''--------------------------------------------------------------------------------------------------------------------------------------------------------
+Setting Up U&P window'''
 home=Tk()
 home.title('Arrangement Assembler')
 home.configure(background="black")
@@ -376,9 +374,10 @@ user=Entry(home,width=40,font= ('Gabriola',20,'bold'))
 user.grid(padx=10, pady=2,row=1,column=3,columnspan=2)
 label=Label(home , text = 'MYSQL Password : ' , bg='black', fg= 'powder blue', font =('Gabriola', 30 ))
 label.grid(padx=2, pady=2,row=2,column=1,columnspan=2)
-paswrd=Entry(home,width=40,show='$$',font= ('Gabriola',20,'bold'))
+paswrd=Entry(home,width=40,show='+',font= ('Gabriola',20,'bold'))
 paswrd.grid(padx=10, pady=2,row=2,column=3,columnspan=2)
 nxt=Button (home, text='NEXT',width=10,height= 1,bd=5, font= ('Georgia',8), bg='black',fg='powder blue', relief= 'raised',
             command=mwin)
 nxt.grid(padx=2, pady=2, row=3, column= 3)
 home.mainloop()
+'''>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>THANK YOU<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<'''
